@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image to PDF Builder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="background-layer" aria-hidden="true">
+    <span class="orb orb-a"></span>
+    <span class="orb orb-b"></span>
+    <span class="orb orb-c"></span>
+  </div>
+
+  <main class="app-shell">
+    <header class="hero reveal">
+      <p class="eyebrow">Localhost Website</p>
+      <h1>Image to PDF Generator</h1>
+      <p>Create a PDF from one image to unlimited images. Choose file name, page orientation, page size, then download a standard PDF.</p>
+    </header>
+
+    <section class="panel reveal delay-1">
+      <h2>PDF Settings</h2>
+      <div class="grid two-columns">
+        <label class="field">
+          <span>Output File Name</span>
+          <input id="outputName" type="text" value="outputname" placeholder="outputname" />
+        </label>
+
+        <label class="field">
+          <span>Orientation</span>
+          <select id="orientation">
+            <option value="portrait">Portrait</option>
+            <option value="landscape">Landscape</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Page Size</span>
+          <select id="pageSize">
+            <option value="a4">A4</option>
+            <option value="letter">Letter</option>
+            <option value="legal">Legal</option>
+            <option value="a3">A3</option>
+            <option value="a5">A5</option>
+            <option value="tabloid">Tabloid</option>
+            <option value="custom">Custom (mm)</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Page Margin (mm)</span>
+          <input id="margin" type="number" min="0" max="40" step="1" value="10" />
+        </label>
+      </div>
+
+      <div id="customSizeBox" class="grid two-columns hidden" aria-hidden="true">
+        <label class="field">
+          <span>Custom Width (mm)</span>
+          <input id="customWidth" type="number" min="20" step="1" value="210" />
+        </label>
+        <label class="field">
+          <span>Custom Height (mm)</span>
+          <input id="customHeight" type="number" min="20" step="1" value="297" />
+        </label>
+      </div>
+    </section>
+
+    <section class="panel reveal delay-2">
+      <div class="section-head">
+        <h2>Image Upload Sections</h2>
+        <div class="button-row">
+          <button id="addSlotBtn" type="button" class="ghost-btn">Add One More Section</button>
+          <button id="bulkAddBtn" type="button" class="ghost-btn">Add Multiple Images</button>
+          <input id="bulkInput" type="file" accept="image/*" multiple hidden />
+        </div>
+      </div>
+      <p class="hint">Each section becomes one PDF page in the same order.</p>
+      <div id="slots" class="slot-list"></div>
+    </section>
+
+    <section class="panel reveal action-bar delay-3">
+      <button id="generateBtn" type="button" class="primary-btn">Generate PDF</button>
+      <p id="status" class="status" aria-live="polite">Ready. Add images and click Generate PDF.</p>
+    </section>
+  </main>
+
+  <template id="slotTemplate">
+    <article class="slot-card">
+      <div class="slot-head">
+        <h3 class="slot-title">Page 1</h3>
+        <button class="ghost-btn remove-slot" type="button">Remove</button>
+      </div>
+
+      <label class="dropzone">
+        <input class="slot-input" type="file" accept="image/*" />
+        <span class="dropzone-text">Choose an image or drag and drop it here</span>
+      </label>
+
+      <div class="preview-box">
+        <span class="placeholder">No image selected.</span>
+      </div>
+
+      <p class="slot-meta">Accepted formats: JPG, PNG, WEBP, BMP</p>
+    </article>
+  </template>
+</body>
+</html>
